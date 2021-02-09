@@ -6,6 +6,7 @@ const server = require('../server');
 chai.use(chaiHttp);
 
 let test_id;
+let test_id2;
 
 suite('Functional Tests', function() {
 
@@ -55,7 +56,7 @@ suite('Functional Tests', function() {
           assert.property(res.body, 'created_on')
           assert.property(res.body, 'updated_on')
           assert.property(res.body, '_id')
-          test_id = res.body._id
+          test_id2 = res.body._id
           done()
         });
     });
@@ -126,7 +127,7 @@ suite('Functional Tests', function() {
       chai
         .request(server)
         .get("/api/issues/test_project")
-        .query({ assigned_to: "test assignee", status: "test status" })
+        .send({ assigned_to: "test assignee", status: "test status" })
         .end((err, res) => {
           assert.equal(res.status, 200);
           assert.isArray(res.body)
@@ -150,10 +151,10 @@ suite('Functional Tests', function() {
       chai
         .request(server)
         .put("/api/issues/test_project")
-        .query({ _id: "601c6e69b549d6012a0b3aa5", issue_title: "changed title" })
+        .send({ _id: test_id, issue_title: "changed title" })
         .end((err, res) => {
           assert.equal(res.status, 200);
-          assert.equal(res.text, '{"result":"successfully updated", "_id":"601c6e69b549d6012a0b3aa5"}')
+          assert.equal(res.text, `{"result":"successfully updated", "_id":"${test_id}"}`)
           done();
         });
     });
@@ -162,10 +163,10 @@ suite('Functional Tests', function() {
       chai
         .request(server)
         .put("/api/issues/test_project")
-        .query({ _id: "601c6e69b549d6012a0b3aa5", issue_title: "changed title and text", issue_text: "changed title and text" })
+        .send({ _id: test_id, issue_title: "changed title and text", issue_text: "changed title and text" })
         .end((err, res) => {
           assert.equal(res.status, 200);
-          assert.equal(res.text, '{"result":"successfully updated", "_id":"601c6e69b549d6012a0b3aa5"}')
+          assert.equal(res.text, `{"result":"successfully updated", "_id":"${test_id}"}`)
           done();
         });
     });
@@ -174,10 +175,10 @@ suite('Functional Tests', function() {
       chai
         .request(server)
         .put("/api/issues/test_project")
-        .query({ issue_title: "changed title and text", issue_text: "changed title and text" })
+        .send({ issue_title: "changed title and text", issue_text: "changed title and text" })
         .end((err, res) => {
           assert.equal(res.status, 200);
-          assert.equal(res.text, '{"error":"missing _id"}')
+          assert.equal(res.text, `{"error":"missing _id"}`)
           done();
         });
     });
@@ -186,10 +187,10 @@ suite('Functional Tests', function() {
       chai
         .request(server)
         .put("/api/issues/test_project")
-        .query({ _id: "601c6e69b549d6012a0b3aa5" })
+        .send({ _id: test_id })
         .end((err, res) => {
           assert.equal(res.status, 200);
-          assert.equal(res.text, '{"error":"no update field(s) sent","_id":"601c6e69b549d6012a0b3aa5"}')
+          assert.equal(res.text, `{"error":"no update field(s) sent","_id":"${test_id}"}`)
           done();
         });
     });
@@ -198,7 +199,7 @@ suite('Functional Tests', function() {
       chai
         .request(server)
         .put("/api/issues/test_project")
-        .query({ _id: "1234" })
+        .send({ _id: "1234" })
         .end((err, res) => {
           assert.equal(res.status, 200);
           assert.equal(res.text, '{"error":"could not update","_id":"1234"}')
@@ -212,10 +213,10 @@ suite('Functional Tests', function() {
       chai
         .request(server)
         .delete("/api/issues/test_project")
-        .query({ _id: "601c70aa1b0f1001d86c14ab" })
+        .send({ _id: test_id })
         .end((err, res) => {
           assert.equal(res.status, 200);
-          assert.equal(res.text, '{"result":"succesfully deleted","_id":"601c70aa1b0f1001d86c14ab"}')
+          assert.equal(res.text, `{"result":"succesfully deleted","_id":"${test_id}"}`)
           done();
         });
     });
@@ -224,7 +225,7 @@ suite('Functional Tests', function() {
       chai
         .request(server)
         .delete("/api/issues/test_project")
-        .query({ _id: "1234" })
+        .send({ _id: "1234" })
         .end((err, res) => {
           assert.equal(res.status, 200);
           assert.equal(res.text, '{"error":"could not delete","_id":"1234"}')

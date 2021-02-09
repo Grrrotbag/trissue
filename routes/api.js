@@ -102,7 +102,7 @@ module.exports = function (app) {
     .put(function (req, res){
       const project = req.params.project;
 
-      console.log("body: ", req.body)
+      // console.log("body: ", req.body)
 
       if (!req.body._id) {
         res.json({ error: "missing _id" })
@@ -124,7 +124,7 @@ module.exports = function (app) {
         }
       })
 
-      console.log("update: ", update)
+      // console.log("update: ", update)
 
       Issue.findByIdAndUpdate(id, update, {new: true}, (err, doc) => {
         if (err) return res.json({ error: 'could not update', '_id': _id });
