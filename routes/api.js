@@ -113,8 +113,6 @@ module.exports = function (app) {
     .put(function (req, res) {
       const project = req.params.project;
 
-      // console.log("body: ", req.body)
-
       if (!req.body._id) {
         return res.json({ error: "missing _id" });
       }
@@ -152,11 +150,15 @@ module.exports = function (app) {
         }
       });
 
-      // console.log("update: ", update)
-
-      Issue.findByIdAndUpdate(id, update, { new: true }, (err, doc) => {
-        if (err) return res.json({ error: "could not update", _id: id });
-        return res.json({ result: "successfully updated", _id: id });
+      Issue.findByIdAndUpdate(id, update, {new: true}, (err, doc) => {
+        if (err) {
+          return res.json({ error: "could not update", _id: id });
+        } else if (doc === null){ //this is super important! fcc tests fail without it - https://forum.freecodecamp.org/t/issue-tracker-only-post-requests-pass/440646/12
+          return res.json({ error: 'could not update', '_id': id })
+        } else {
+          let response = res.json({ result: "successfully updated", _id: id })
+          return response;
+        }
       });
     })
 
@@ -169,9 +171,16 @@ module.exports = function (app) {
 
       let id = req.body._id;
 
-      Issue.deleteOne({ _id: id }, function (err) {
-        if (err) return res.json({ error: "could not delete", _id: id });
-        res.json({ result: "successfully deleted", _id: id });
+      // does not work with deleteOne(). See previous comment for why the (else if) is super important!
+      Issue.findByIdAndRemove(id, function (err, doc) {
+        if (err) {
+          return res.json({ error: 'could not delete', '_id': id });
+        } else if (doc === null) {
+          return res.json({ error: 'could not delete', '_id': id })
+        }else {
+          let response = res.json({ result: 'successfully deleted', '_id': id });
+          return response;
+        }
       });
     });
 };

@@ -33,6 +33,7 @@ suite("Functional Tests", function () {
           assert.property(res.body, "updated_on");
           assert.property(res.body, "_id");
           test_id = res.body._id;
+          console.log(res.body._id)
           done();
         });
     });
@@ -73,7 +74,7 @@ suite("Functional Tests", function () {
         })
         .end((err, res) => {
           assert.equal(res.status, 200);
-          assert.equal(res.text, '{"error":"required field(s) missing"}');
+          assert.equal(res.text, `{"error":"required field(s) missing"}`);
 
           done();
         });
@@ -218,6 +219,7 @@ suite("Functional Tests", function () {
         .send({ _id: test_id })
         .end((err, res) => {
           assert.equal(res.status, 200);
+          console.log(res.text)
           assert.equal(res.text, `{"result":"successfully deleted","_id":"${test_id}"}`);
           done();
         });
@@ -230,6 +232,7 @@ suite("Functional Tests", function () {
         .send({ _id: "1234" })
         .end((err, res) => {
           assert.equal(res.status, 200);
+          console.log(res.text)
           assert.equal(res.text, '{"error":"could not delete","_id":"1234"}');
           done();
         });
@@ -242,6 +245,7 @@ suite("Functional Tests", function () {
         .send({})
         .end((err, res) => {
           assert.equal(res.status, 200);
+          console.log(res.text)
           assert.equal(res.text, '{"error":"missing _id"}');
           done();
         });
