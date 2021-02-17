@@ -1,5 +1,7 @@
 # Trissue
 
+![preview image](preview.png)
+
 An issue tracking API service. Written as part of the [FreeCodeCamp](https://www.freecodecamp.org) challenges.
 
 Special thanks to Prosper Opara, the author of [this article](https://www.codementor.io/@oparaprosper79/understanding-node-error-err_http_headers_sent-117mpk82z8), who pointed me towards a retrospectively obvious solution to a problem that was killing me. You have to actually *return* after catching a condition or things keep running!
