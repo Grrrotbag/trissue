@@ -3,8 +3,123 @@
   padding: 0px;
 }
 
+:root {
+  --ruby-red: #9b1d20ff;
+  --mustard: #fcdc4dff;
+  --mango-tango: #ff8c42ff;
+  --pewter-blue: #7d98a1ff;
+  --carolina-blue: #20a4f3ff;
+  --tiffany-blue: #2ec4b6ff;
+  --forest-green-traditional: #1b512dff;
+  --msu-green: #243e36ff;
+  --rich-black: #03312eff;
+  --rich-black-fogra-29: #011627ff;
+  --ivory: #eaf2e3ff;
+  --middle-blue-green: #a6ede2ff;
+  --quick-silver: #aaa09cff;
+  --tart-orange: #f25757ff;
+  --sandy-brown: #f2a05dff;
+  --corn: #f2e863ff;
+  --orange-yellow-crayola: #f2cd60ff;
+  --base-font: "Cormorant Garamond", serif;
+  --logo-font: "Monoton";
+  --logo-font: "Cormorant Garamond";
+  --form-font: "Cormorant Garamond";
+  --button-font: "Bebas Neue";
+  --mono-font: "Roboto Mono", monospace;
+}
+
 body {
-  padding: 10px;
+  /* padding: 10px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--ivory);
+  font-family: var(--button-font);
+}
+
+hr {
+  margin: 3em 0 3em 0;
+  width: 80%;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--button-font);
+  margin: 1em 0 0 0;
+  color: var(--ruby-red);
+}
+
+h1 {
+  font-size: 5em;
+}
+
+code {
+  font-family: var(--mono-font);
+}
+
+/* =============================================================================
+| containers
+============================================================================= */
+#exampleGet {
+  /* background-color: red; */
+  width: 50%;
+}
+
+#testui {
+  /* background-color: blue; */
+  width: 50%;
+}
+
+/* =============================================================================
+| forms
+============================================================================= */
+form {
+  margin-bottom: 25px;
+  /* padding: 15px; */
+  display: inline-block;
+  width: 100%;
+  border-radius: 5px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+input,
+textarea,
+button {
+  display: block;
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 80%;
+  border: 1px solid var(--quick-silver);
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+input[type="submit"],
+button[type="submit"] {
+  font-family: var(--button-font);
+  font-size: 1.3em;
+  border-radius: 3px;
+  background-color: #e4f1fe;
+  background-color: var(--pewter-blue);
+  border: 1px solid grey;
+  box-shadow: 2px 2px var(--quick-silver);
+  cursor: pointer;
+}
+
+input[type="submit"]:hover,
+button[type="submit"]:hover {
+  background-color: var(--carolina-blue);
+}
+
+input[type="checkbox"] {
+  display: inline-block;
+  width: unset;
 }
 
 .issue {
@@ -12,6 +127,7 @@ body {
   padding: 5px;
   width: 60%;
   border: 2px solid black;
+  background-color: red;
 }
 
 .closed {
